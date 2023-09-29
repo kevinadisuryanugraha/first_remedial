@@ -21,8 +21,8 @@
 
         public static function query($sql)
         {
-            $connection = self::connect();
-            return $connection->query($sql);
+            $koneksi = self::connect();
+            return $koneksi->query($sql);
         }
 }
 

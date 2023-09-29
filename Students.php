@@ -1,6 +1,6 @@
 <?php
 
-include_once('DB.php');
+include_once('./DB.php');
 
 class Student extends DB {
     public static function create($data)

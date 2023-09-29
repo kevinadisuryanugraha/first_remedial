@@ -22,7 +22,7 @@ class User extends UserAbstract implements UserInterface {
     public static function get_password(){
         return self::$password ;
     }
-    
+
     public static function index(){
         $result = DB::query("SELECT * FROM users")->fetch_all(MYSQLI_ASSOC); 
         return $result;
@@ -36,26 +36,28 @@ class User extends UserAbstract implements UserInterface {
     }
     
     public static function show($id){
-        $result = DB::query("SELECT*FROM users WHERE id= '$id'")->fetch_assoc(); 
+        $result = DB::query("SELECT * FROM users WHERE id= '$id'")->fetch_assoc(); 
         return $result;
     }
+    
     
     public static function update($id){
         $username = self::$username;
         $password = self::$password;
-
-        $sql = "UPDATE students SET username='$username', password='$password' WHERE id='$id'";
+    
+        $sql = "UPDATE users SET username='$username', password='$password' WHERE id='$id'";
         $result = DB::connect()->query($sql);
-
+    
         if($result){
             return "berhasil update";
         }else{
             return "gagal update";
         }
     }
+
     public static function delete($id){
-        $result = DB::query("DELETE FROM users WHERE id='$id'"); 
-       
+        $result = DB::query("DELETE FROM users WHERE id='$id'");
+        return $result;
     }
 
     public static function getByUsername($username){

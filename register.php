@@ -13,8 +13,7 @@ if(isset($_POST['register'])) {
         header("Location: login.php");
     }
     else {
-        // Handle registration error, e.g., display an error message to the user
-        echo "Registration failed: " . $register["message"];
+        header("Location: register.php");
     }
 }
 ?>
@@ -32,7 +31,7 @@ if(isset($_POST['register'])) {
 <body>
     <div class="bg-yellow-400 flex justify-center items-center h-screen">
         <div class="bg-white p-8 rounded-xl h-96 w-96">
-            <form action="login.php" method="POST">
+            <form action="" method="POST">
                 <p class="font-bold text-3xl text-center mb-5">Register Page</p>
                 <div class="mb-3">
                     <label for="username" id="username">Username</label>
