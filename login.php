@@ -1,16 +1,22 @@
 <?php
 include_once('./Auth.php');
 
-if(isset($_POST['login'])){
+if(isset($_POST['login'])) {
     $data = [
         "username" => $_POST['username'],
-        "password" => $_POST['password'],
+        "password" => $_POST['password']
     ];
+    $result = Auth::login($data["username"], $data["password"]);
 
-    $result = Auth::login($_POST['username'], $_POST['password']);
-    // die(var_dump($result));
+    if($result === true) {
+        // Login berhasil, arahkan ke halaman home
+        header("Location: home.php");
+        exit(); // Penting untuk menghentikan eksekusi skrip setelah mengarahkan
+    } else {
+        // Login gagal, tampilkan pesan kesalahan
+        $error_message = "Username atau password tidak valid.";
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -26,15 +32,22 @@ if(isset($_POST['login'])){
 <body>
     <div class="bg-yellow-400 flex justify-center items-center h-screen">
         <div class="bg-white p-8 rounded-xl h-96 w-96">
-            <form action="home.php" method="POST">
+            <form action="" method="POST">
                 <p class="font-bold text-3xl text-center mb-5">Login Page</p>
+
+                <!-- Tampilkan pesan kesalahan jika login gagal -->
+                <?php if(isset($error_message)) : ?>
+                    <div class="alert alert-danger">
+                        <?= $error_message ?>
+                    </div>
+                <?php endif ?>
 
                 <div class="mb-3">
                     <label for="username" id="username">Username</label>
                     <input type="text" id="username" name="username" placeholder="isi nama lengkap" class="flex border rounded-sm p-1 mt-1 w-full">
                 </div>
                 <div class="mb-3">
-                    <label for="password id=" password">Password</label>
+                    <label for="password" id="password">Password</label>
                     <input type="password" id="password" name="password" class="flex border rounded-sm p-1 mt-1 w-full">
                 </div>
                 <div class="mt-5">

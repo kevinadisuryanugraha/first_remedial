@@ -1,6 +1,8 @@
 <?php
 include_once('./Auth.php');
 
+$authError = "";
+
 if(isset($_POST['register'])) {
     $data = [
         "username" => $_POST["username"],
@@ -9,11 +11,13 @@ if(isset($_POST['register'])) {
 
     $register = Auth::register($data);
 
-    if($register["status"] === "success") {
+    if($register === true) {
+        // Login berhasil, arahkan ke halaman home
         header("Location: login.php");
-    }
-    else {
-        header("Location: register.php");
+        exit(); // Penting untuk menghentikan eksekusi skrip setelah mengarahkan
+    } elseif ($register === "username_exists") {
+        // Username sudah ada di database, atur pesan error
+        $authError = "Username sudah ada. Silakan gunakan username lain.";
     }
 }
 ?>
@@ -33,6 +37,13 @@ if(isset($_POST['register'])) {
         <div class="bg-white p-8 rounded-xl h-96 w-96">
             <form action="" method="POST">
                 <p class="font-bold text-3xl text-center mb-5">Register Page</p>
+
+
+                <?php if (!empty($authError)) { ?>
+                    <p class="text-red-500 text-sm mb-3"><?php echo $authError; ?></p>
+                <?php } ?>
+
+
                 <div class="mb-3">
                     <label for="username" id="username">Username</label>
                     <input type="text" name="username" id="username" placeholder="isi nama lengkap" class="flex border rounded-sm p-1 mt-1 w-full">
