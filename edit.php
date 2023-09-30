@@ -9,6 +9,7 @@ if(isset($_POST['submit'])){
         'id' => $_POST['id'],
         'name' => $_POST['name'],
         'nis' => $_POST['nis'],
+        'phone' => $_POST['phone'],
     ]);
 
     setcookie('message', $response, time() + 10);
@@ -37,10 +38,16 @@ if(isset($_POST['submit'])){
             <input class=" block w-full placeholder:font-light rounded border border-blue-300 p-1" id="nis" name="nis"
               type="number" placeholder="Nis" value="<?=$student['nis'] ?>">
           </div>
+          <div class=" mb-3">
+            <label for="phone">phone :</label>
+            <input class=" block w-full placeholder:font-light rounded border border-blue-300 p-1" id="phone" name="phone"
+              type="number" placeholder="Phone" value="<?=$student['phone'] ?>">
+          </div>
           <div class="gap-2">
             <button name="submit" type="submit" class=" text-white bg-green-500 hover:bg-green-600 pt-2 pb-2 pr-6 pl-6 rounded-xl ">Submit</button>
           </div>
         </form>
+        <div class="m-5 bg-purple-600 w-32 text-white p-3"><p><a href="logout.php">LOGOUT</a></p></div>
       </div>
 
 <?php include('./component/footer.php'); ?>

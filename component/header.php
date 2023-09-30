@@ -13,7 +13,7 @@
               <a href="#" class="text-gray-900 dark:text-white hover:underline">Team</a>
             </li>
             <li>
-              <a href="#" class="text-gray-900 dark:text-white hover:underline">Features</a>
+              <a href="logout.php" class="text-gray-900 dark:text-white hover:underline">LOGOUT</a>
             </li>
           </ul>
         </div>

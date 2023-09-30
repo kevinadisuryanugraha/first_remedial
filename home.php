@@ -1,13 +1,21 @@
 <?php 
+
+session_start();
+
+if($_SESSION["username"] === null){
+    header("Location: login.php");
+}
+
 include_once('./Students.php');
 
 $students = Student::index();
 
 if(isset($_POST['submit'])){
-  $response = Student::create([
-    'name' => $_POST['name'],
-    'nis' => $_POST['nis'],
-  ]);
+  Student::set_name($_POST['name']);
+  Student::set_nis($_POST['nis']);
+  Student::set_phone($_POST['phone']);
+
+  $response = Student::create();
   
   setcookie('message', $response, time() + 10);
 
@@ -51,6 +59,11 @@ if(isset($_POST['delete'])){
             <input class=" block w-full placeholder:font-light rounded border border-blue-300 p-1" id="nis" name="nis"
               type="number" placeholder="Nis">
           </div>
+          <div class=" mb-3">
+            <label for="phone">phone :</label>
+            <input class=" block w-full placeholder:font-light rounded border border-blue-300 p-1" id="phone" name="phone"
+              type="number" placeholder="Phone">
+          </div>
           <div class="gap-2">
             <button name="submit" class=" text-white bg-green-500 hover:bg-green-600 pt-2 pb-2 pr-6 pl-6 rounded-xl ">Submit</button>
           </div>
@@ -65,7 +78,8 @@ if(isset($_POST['delete'])){
               <tr>
                 <th class="w-20 p-3">No</th>
                 <th class=" w-96">Nama</th>
-                <th class="">Nilai</th>
+                <th class="">Nis</th>
+                <th class="">Phone</th>
                 <th class="">Aksi</th>
               </tr>
             </thead>
@@ -75,6 +89,7 @@ if(isset($_POST['delete'])){
                 <td class="p-4"><?= $key + 1 ?></td>
                 <td><?= $student['name'] ?></td>
                 <td><?= $student['nis'] ?></td>
+                <td><?= $student['phone'] ?></td>
                 <td>
                   <a class="text-white hover:bg-blue-800 pt-2 pb-2 pr-3 pl-3 rounded-xl bg-blue-500" href="detail.php?id=<?= $student['id'] ?>" >Detail</a>
                   <a href="edit.php?id=<?= $student['id'] ?>" class="text-white hover:bg-blue-800 pt-2 pb-2 pr-3 pl-3 rounded-xl bg-blue-500">Edit</a>
@@ -90,8 +105,6 @@ if(isset($_POST['delete'])){
         </div>
       </div>
     </div>
-
-    <div class="m-5 bg-purple-600 w-32 text-white p-3"><p><a href="login.php">LOGOUT</a></p></div>
     <!-- footer -->
     <?php include('./component/footer.php'); ?>
     <?php include('./component/bottom.php'); ?>

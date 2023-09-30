@@ -14,10 +14,12 @@ $student = Student::show($id);
     <div class="basis-1/5">
         <p class="font-bold">Nama</p>
         <p class="font-bold">Nis</p>
+        <p class="font-bold">Phone</p>
     </div>
     <div class="basis-4/5">
         <p><?= $student['name'] ?></p>
         <p><?= $student['nis'] ?></p>
+        <p><?= $student['phone'] ?></p>
     </div>
 </div>
 <div class="grid gap-2">

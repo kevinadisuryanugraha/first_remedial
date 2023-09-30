@@ -47,7 +47,7 @@ Class Auth {
 
         session_destroy();
 
-        return true;
+        header("Location: login.php");
     }
 }
 ?>
