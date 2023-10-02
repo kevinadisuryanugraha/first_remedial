@@ -6,9 +6,18 @@ include_once("./DB.php");
 include_once("./User.php");
 
 Class Auth {
-    public static function register ($data){
+    public static function register($data) {
         $username = $data["username"];
-        $password = password_hash($data["password"], PASSWORD_DEFAULT);
+        $password = $data["password"];
+        $konfirm_password = $data["konfirm_password"];
+    
+        // Periksa apakah password dan konfirmasi password cocok
+        if ($password !== $konfirm_password) {
+            return "password_mismatch";
+        }
+    
+        // Hash password jika cocok
+        $password = password_hash($password, PASSWORD_DEFAULT);
     
         if ($username !== "" && $password !== "") {
             // Cek apakah username sudah ada di database
@@ -24,9 +33,31 @@ Class Auth {
                 return "username_exists";
             }
         }
-    
         return "error";
     }
+    
+    // public static function register ($data){
+    //     $username = $data["username"];
+
+        
+    //     $password = password_hash($data["password"], PASSWORD_DEFAULT);
+    
+    //     if ($username !== "" && $password !== "") {
+    //         // Cek apakah username sudah ada di database
+    //         $existingUser = User::getByUsername($username);
+    
+    //         if ($existingUser === null) {
+    //             // Username belum ada, maka tambahkan ke database
+    //             User::set_username($username);
+    //             User::set_password($password);
+    //             return User::create();
+    //         } else {
+    //             // Username sudah ada, kembalikan pesan error
+    //             return "username_exists";
+    //         }
+    //     }
+    //     return "error";
+    // }
     
 
     public static function login ($username, $password){
